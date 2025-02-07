@@ -938,6 +938,7 @@ and decode_expr v =
 				let name = ((decode_string (field v "name")), name_pos)
 				and t = opt decode_ctype (field v "type")
 				and eo = opt loop (field v "expr") in
+				if static then raise (Error.Error (Error.make_error (Custom ("Unexpected local static " ^ (fst name))) (snd name)));
 				mk_evar ~final ~static ?t ?eo ~meta name
 			) (decode_array vl))
 		| 11, [kind;f] ->

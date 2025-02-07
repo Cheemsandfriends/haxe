@@ -1169,8 +1169,9 @@ and parse_block_elt = parser
 	| [< '(Kwd Static,p); s >] ->
 		begin match s with parser
 		| [< (vl,p) = parse_block_var >] ->
-			let vl = List.map (fun ev -> {ev with ev_static = true}) vl in
-			(EVars vl,p)
+			(* let vl = List.map (fun ev -> {ev with ev_static = true}) vl in *)
+			(* (EVars vl,p) *)
+			syntax_error (Expected ["var";"final"]) s (mk_null_expr p)
 		| [<>] -> syntax_error (Expected ["var";"final"]) s (mk_null_expr p)
 		end
 	| [< '(Binop OpLt,p1); s >] ->

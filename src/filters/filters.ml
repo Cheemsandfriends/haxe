@@ -710,7 +710,7 @@ let run tctx main before_destruction =
 	] in
 	List.iter (run_expression_filters tctx detail_times filters) new_types;
 	let filters = [
-		"local_statics",LocalStatic.run tctx;
+		(* "local_statics",LocalStatic.run tctx; *)
 		"fix_return_dynamic_from_void_function",fix_return_dynamic_from_void_function true;
 		"check_local_vars_init",check_local_vars_init tctx;
 		"check_abstract_as_value",check_abstract_as_value;
