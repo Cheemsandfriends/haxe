@@ -50,22 +50,10 @@ jobs:
       - name: Print Neko version
         run: neko -version 2>&1
 
-      # TODO: less hacky path handling
-      # - name: Install pkg-config
-      #   shell: pwsh
-      #   run: |
-      #     Set-PSDebug -Trace 1
-      #     Invoke-WebRequest http://ftp.gnome.org/pub/gnome/binaries/win64/dependencies/pkg-config_0.23-2_win64.zip -OutFile $env:RUNNER_TEMP/pkg-config.zip
-      #     Expand-Archive $env:RUNNER_TEMP/pkg-config.zip -DestinationPath $env:RUNNER_TEMP
-      #     Copy-Item -Path $env:RUNNER_TEMP/bin/pkg-config.exe -Destination D:\cygwin\bin\
-
       - name: Setup ocaml
         uses: ocaml/setup-ocaml@3d85bf33a66e089149cd1e9c75da7b9cb6d9d3a7
         with:
           ocaml-compiler: 4.14.0
-          opam-repositories: |
-            opam-repository-mingw: https://github.com/ocaml-opam/opam-repository-mingw.git#sunset
-            default: https://github.com/ocaml/opam-repository.git
           opam-local-packages: |
             haxe.opam
           cache-prefix: w64-v1-4.3.7
@@ -175,25 +163,14 @@ jobs:
       - name: Print Neko version
         run: neko -version 2>&1
 
-      # TODO: less hacky path handling
-      # - name: Install pkg-config
-      #   shell: pwsh
-      #   run: |
-      #     Set-PSDebug -Trace 1
-      #     Invoke-WebRequest http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/pkg-config_0.26-1_win32.zip -OutFile $env:RUNNER_TEMP/pkg-config.zip
-      #     Expand-Archive $env:RUNNER_TEMP/pkg-config.zip -DestinationPath $env:RUNNER_TEMP
-      #     Copy-Item -Path $env:RUNNER_TEMP/bin/pkg-config.exe -Destination D:\cygwin\bin\
-
       - name: Setup ocaml
         id: ocaml
         continue-on-error: true
-        uses: ocaml/setup-ocaml@3d85bf33a66e089149cd1e9c75da7b9cb6d9d3a7
+        uses: kLabz/setup-ocaml@win32-2025
         with:
-          ocaml-compiler: 4.14.0
-          opam-depext: false
+          ocaml-compiler: 4.08.1
           opam-repositories: |
-            opam-repository-mingw: https://github.com/ocaml-opam/opam-repository-mingw.git#sunset
-            default: https://github.com/ocaml/opam-repository.git
+            default: https://github.com/fdopen/opam-repository-mingw.git#opam2
           opam-local-packages: |
             haxe.opam
           cache-prefix: w32-v1-4.3.7
@@ -202,13 +179,11 @@ jobs:
       # (when cygwin cache doesn't exist, ocaml install fails with a curl error)
       - name: Setup ocaml (second chance)
         if: steps.ocaml.outcome == 'failure'
-        uses: ocaml/setup-ocaml@3d85bf33a66e089149cd1e9c75da7b9cb6d9d3a7
+        uses: kLabz/setup-ocaml@win32-2025
         with:
-          ocaml-compiler: 4.14.0
-          opam-depext: false
+          ocaml-compiler: 4.08.1
           opam-repositories: |
-            opam-repository-mingw: https://github.com/ocaml-opam/opam-repository-mingw.git#sunset
-            default: https://github.com/ocaml/opam-repository.git
+            default: https://github.com/fdopen/opam-repository-mingw.git#opam2
           opam-local-packages: |
             haxe.opam
           cache-prefix: w32-v1-4.3.7
